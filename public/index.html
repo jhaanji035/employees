@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html ng-app="EmployeeApp">
+<head>
+<meta charset="ISO-8859-1">
+<title>Node Mean Project</title>
+<link href="/libs/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="/libs/js/angular.min.js"></script>
+<script src="/controllers/controller.js"></script>
+<script>
+  $(function() {
+    var datepicker=$("#datepicker").datepicker(
+                    {changeMonth:true,changeYear:true,maxDate:"-1M -1D -1Y",dateFormat:"yy-mm-dd"}
+                                              );
+    $("#datepicker").bind("keydown", function (event) {
+       event.preventDefault();
+     });
+  });
+  </script>
+</head>
+<body>
+<header style="padding: 20px 0 15px;">
+	<div class="logo">
+		<a href="/">Node JS-Angular-Mongo</a>
+	</div>
+</header>
+<section>
+	<div class="container" ng-controller="EmployeeCtrl">		
+	<h1 align="center">MEAN Application - Employee Directory App</h1>
+	<div class="table-responsive"> 
+		<table class="table table-bordered table-condensed">
+			<thead>
+				<tr>
+					<td>Name</td>
+					<td>Email</td>
+					<td>Date of Birth</td>
+					<td>Department</td>
+					<td>Gender</td>
+					<td>Age</td>
+					<td width="200px">Action</td>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<form>
+						<td><input class="form-control" ng-model="employee.Name" required placeholder="Name" /></td>
+						<td><input type="email" ng-model="employee.Email" required class="form-control" placeholder="abc@xyz.com" /></td>
+						<td><input type="text" ng-model="employee.Date_of_birth" id="datepicker" class="form-control" required placeholder="YYYY-MM-DD" /></td>
+						<td><input ng-model="employee.Department" required class="form-control" placeholder="Department" /></td>
+						<td><input ng-model="employee.Gender" required class="form-control" placeholder="Gender" /></td>
+						<td ng-if="employee.age"><input type="number" ng-model="employee.Age" disabled class="form-control" placeholder="Age" /></td>
+						<td></td>
+						<td colspan="2"><button class="btn btn-success btn-md" ng-click="addEmployee()">Add	</button>&nbsp;&nbsp;<button class="btn btn-success btn-md" ng-click="updateEmployee()">Update</button></td>
+					</form>
+				</tr>
+				<tr ng-repeat="employee in employees">
+					<td>{{employee.Name}}</td>
+					<td>{{employee.Email}}</td>
+					<td>{{employee.Date_of_birth | date:'yyyy-MM-dd'}}</td>
+					<td>{{employee.Department}}</td>
+					<td>{{employee.Gender}}</td>
+					<td>{{employee.Age}}</td>
+					<td>
+						<button class="btn btn-danger btn-sm"
+							ng-click="removeEmployee(employee._id)">Delete</button>&nbsp;&nbsp;
+						<button class="btn btn-primary btn-sm"
+							ng-click="editEmployee(employee._id)">Edit</button>
+					</td>
+				</tr>
+				<tr ng-if="employees == false">
+					<td colspan="7">No record found</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+	</div>
+</section>
+<footer class="align-center" style="position:fixed;bottom:0;width:100%;left:0;">
+	Pankaj © Node JS Test Corporation
+</footer>
+</body>
+</html>
